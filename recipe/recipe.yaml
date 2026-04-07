@@ -29,7 +29,8 @@ requirements:
     - trove-classifiers ==2026.1.14.14
   run:
     - python >=${{ python_min }},<3.14
-    - apache-airflow-core <3.3.0,>=3.2.0
+    # temporarily drop circular dependency
+    # - apache-airflow-core <3.3.0,>=3.2.0
     - asgiref >=2.3.0
     - attrs >=24.2.0,!=25.2.0
     - babel >=2.17.0
@@ -53,12 +54,12 @@ requirements:
     - pluggy >=1.5.0
     - importlib-metadata >=6.5
     - packaging >=25.0
-tests:
-  - python:
-      imports:
-        - airflow.sdk
-      pip_check: true
-      python_version: ${{ python_min }}.*
+# tests:
+#   - python:
+#       imports:
+#         - airflow.sdk
+#       pip_check: true
+#       python_version: ${{ python_min }}.*
 
 about:
   summary: Python Task SDK for Apache Airflow DAG Authors
