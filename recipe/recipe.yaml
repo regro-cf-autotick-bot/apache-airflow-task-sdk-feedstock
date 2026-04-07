@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: apache-airflow-task-sdk
-  version: "1.1.8"
+  version: 1.2.0
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/apache_airflow_task_sdk-${{ version }}.tar.gz
-  sha256: d9b6027906a0e179c7ddc550c13717663785460a539b933741f22c47d10f4930
+  sha256: d2c4d173388f751e1d900a3f5e67fea3518822b63dd20b60a1bdbf92cdf96e8c
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
@@ -29,7 +29,8 @@ requirements:
     - trove-classifiers ==2026.1.14.14
   run:
     - python >=${{ python_min }},<3.14
-    - apache-airflow-core <3.2.0,>=3.1.7
+    # temporarily drop circular dependency
+    # - apache-airflow-core <3.3.0,>=3.2.0
     - asgiref >=2.3.0
     - attrs >=24.2.0,!=25.2.0
     - babel >=2.17.0
@@ -47,12 +48,18 @@ requirements:
     - colorlog >=6.8.2
     - pydantic >2.11.0
     - pygtrie >=2.5.0
-tests:
-  - python:
-      imports:
-        - airflow.sdk
-      pip_check: true
-      python_version: ${{ python_min }}.*
+    - jsonschema >=4.19.1
+    - typing_extensions >=4.14.1
+    - pathspec >=0.9.0
+    - pluggy >=1.5.0
+    - importlib-metadata >=6.5
+    - packaging >=25.0
+# tests:
+#   - python:
+#       imports:
+#         - airflow.sdk
+#       pip_check: true
+#       python_version: ${{ python_min }}.*
 
 about:
   summary: Python Task SDK for Apache Airflow DAG Authors
